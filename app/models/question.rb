@@ -22,4 +22,35 @@ class Question < ActiveRecord::Base
     :through => :choices,
     :source => :responders
   )
+
+  has_one(
+    :author,
+    :through => :poll,
+    :source => :author
+  )
+
+  def results #responses
+    Choice.find_by_sql([<<-SQL, self.id])
+      SELECT
+        choices.*,
+        COUNT(responses.id) AS num_responses
+      FROM
+        choices
+      LEFT OUTER JOIN
+        responses ON choices.id = responses.choice_id
+      WHERE
+        choices.question_id = ?
+      GROUP BY
+        choices.id
+      ORDER BY
+        num_responses DESC
+    SQL
+
+    # choices.select("choices.*, COUNT(responses.id) AS num_responses")
+    #   .joins("LEFT OUTER JOIN responses ON choices.id = responses.choice_id")
+    #   .group("choices.id")
+    #   .order("num_responses DESC")
+    #   .all
+  end
+
 end
