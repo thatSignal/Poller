@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     Poll.create!(
       :title => title,
       :description => description,
-      :author_id = self.id
+      :author_id => self.id
     )
   end
 

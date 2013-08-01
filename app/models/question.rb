@@ -30,7 +30,15 @@ class Question < ActiveRecord::Base
   )
 
   def results #responses
-    Choice.find_by_sql([<<-SQL, self.id])
+
+    # choices.select("choices.*, COUNT(responses.id) AS num_responses")
+    #   .joins("LEFT OUTER JOIN responses ON choices.id = responses.choice_id")
+    #   .group("choices.id")
+    #   .order("num_responses DESC")
+    #   .all
+
+
+    choices = Choice.find_by_sql([<<-SQL, self.id])
       SELECT
         choices.*,
         COUNT(responses.id) AS num_responses
@@ -46,11 +54,12 @@ class Question < ActiveRecord::Base
         num_responses DESC
     SQL
 
-    # choices.select("choices.*, COUNT(responses.id) AS num_responses")
-    #   .joins("LEFT OUTER JOIN responses ON choices.id = responses.choice_id")
-    #   .group("choices.id")
-    #   .order("num_responses DESC")
-    #   .all
+    results = Hash.new(0)
+    choices.each do |choice|
+      results[choice.body] = choice.num_responses
+    end
+
+    results
   end
 
 end
