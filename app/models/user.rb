@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :username, :email
 
-  #validates :username, p
+  validates :username, :email, :presence => true
 
   has_many(
     :polls,

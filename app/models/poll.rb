@@ -1,6 +1,7 @@
 class Poll < ActiveRecord::Base
   attr_accessible :title, :description, :author_id
 
+  validates :title, :author_id, :presence => true
 
   belongs_to(
     :user,

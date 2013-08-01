@@ -1,6 +1,8 @@
 class Choice < ActiveRecord::Base
   attr_accessible :body, :question_id
 
+  validates :body, :question_id, :presence => true
+
   belongs_to(
     :question,
     :class_name => "Question",

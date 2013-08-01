@@ -1,6 +1,8 @@
 class Response < ActiveRecord::Base
   attr_accessible :choice_id, :responder_id
 
+  validates :choice_id, :responder_id, :presence => true
+
   belongs_to(
     :responder,
     :class_name => "User",
