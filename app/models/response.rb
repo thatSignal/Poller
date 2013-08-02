@@ -25,4 +25,9 @@ class Response < ActiveRecord::Base
     :source => :question
   )
 
+  has_one(
+    :responder_team,
+    :through => :responder,
+    :source => :team
+  )
 end

@@ -14,7 +14,8 @@ class Choice < ActiveRecord::Base
     :responses,
     :class_name => "Response",
     :foreign_key => :choice_id,
-    :primary_key => :id
+    :primary_key => :id,
+    :dependent => :destroy
   )
 
   has_many(

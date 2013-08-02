@@ -14,7 +14,8 @@ class Question < ActiveRecord::Base
     :choices,
     :class_name => "Choice",
     :foreign_key => :question_id,
-    :primary_key => :id
+    :primary_key => :id,
+    :dependent => :destroy
   )
 
   has_many(
@@ -28,6 +29,14 @@ class Question < ActiveRecord::Base
     :through => :poll,
     :source => :author
   )
+
+  has_one(
+    :team,
+    :through => :poll,
+    :source => :team
+  )
+
+
 
   def results #responses
 

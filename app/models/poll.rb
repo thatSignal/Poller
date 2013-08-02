@@ -14,13 +14,20 @@ class Poll < ActiveRecord::Base
     :questions,
     :class_name => "Question",
     :foreign_key => :poll_id,
-    :primary_key => :id
+    :primary_key => :id,
+    :dependent => :destroy
   )
 
   has_many(
     :responders,
     :through => :questions,
     :source => :responders
+  )
+
+  has_one(
+    :team,
+    :through => :author,
+    :source => :team
   )
 
 

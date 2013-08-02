@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801182915) do
+ActiveRecord::Schema.define(:version => 20130801232313) do
 
   create_table "choices", :force => true do |t|
     t.string   "body"
@@ -51,11 +51,20 @@ ActiveRecord::Schema.define(:version => 20130801182915) do
   add_index "responses", ["choice_id"], :name => "index_responses_on_choice_id"
   add_index "responses", ["responder_id"], :name => "index_responses_on_responder_id"
 
+  create_table "teams", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "team_id"
   end
+
+  add_index "users", ["team_id"], :name => "index_users_on_team_id"
 
 end
