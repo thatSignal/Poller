@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :username, :email, :team_id
 
-  validates :username, :email, :presence => true
+  validates :username, :email, :team, :presence => true
 
   has_many(
     :polls,
